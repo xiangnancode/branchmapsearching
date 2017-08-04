@@ -1,5 +1,5 @@
-CC = g++
-CFLAGS = -Wall -c 
+CC = g++ -std=c++0x
+CFLAGS = -c 
 OBJ = main.o buildMap.o mapNode.o
 
 findOP : $(OBJ)
