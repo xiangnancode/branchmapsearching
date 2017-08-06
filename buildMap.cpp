@@ -49,12 +49,23 @@ void buildMap::showMap() {
 }
 
 void buildMap::printResult(double maxscore, mapNode* maxstate) {
-	cout << "maxscore is: " << maxscore << endl;
-	cout << "maxstate is: " << maxstate->key << endl;
+	ofstream file;
+	file.open("./output/result.txt");
+	string entry;
+	entry = "maxscore is: " + to_string(maxscore);
+	file << entry << endl;
+	cout << entry << endl;
+	entry = "maxstate is: " + maxstate->key;
+	file << entry;
+	cout << entry << endl;
+	file.close();
+	file.open("./output/logbook.csv");
 	cout << "logbook: " << endl;
 	for (int i = 0; i < maxstate->logbook.size(); ++i) {
 		cout << maxstate->logbook[i] << endl;
+		file << maxstate->logbook[i] + '\n';
 	}
+	file.close();
 }
 
 void buildMap::initialize(string filename) {

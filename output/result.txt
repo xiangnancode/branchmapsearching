@@ -1,0 +1,2 @@
+maxscore is: 0.128288
+maxstate is: A,AAPL,PAY
