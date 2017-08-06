@@ -9,7 +9,7 @@
 #include <unordered_map>
 #include <set>
 #include <queue>
-
+#include <limits>
 
 using namespace std;
 
@@ -18,8 +18,9 @@ private:
 	unordered_map<string, vector< pair<string, double> > > branches;//input, branches and weight of the map
 	unordered_map<string, mapNode*> my_map;//hash map from state to mapNode
 	set<string> loadBranchMap(string);//load the input file to 'branches' and return the initail state
+	int amount;
 	void branchMapcheck();//also user to check 'branches'. ussage: input 'from' from the command line, print all 'to' and 'weight'
-    
+    void showMap();
 public:
     //buildMap();
     void initialize(string);//initialize the map from input file

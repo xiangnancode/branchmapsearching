@@ -1,8 +1,8 @@
 #include "mapNode.h"
 
-string mapNode::set2key() {
+string mapNode::set2key(set<string> aSet) {
 	string strset;//string tpye of the ordered set
-	for(auto i : bucket) {//for all elements in the set
+	for(auto i : aSet) {//for all elements in the set
 		if (strset.size() == 0) {//first element
 			strset = i;
 		} else {//rest of the elements
@@ -20,11 +20,11 @@ mapNode::mapNode() {
 mapNode::mapNode(set<string> set_in, double score_in) {
 	this->score = score_in;
 	this->bucket = set_in;
-	this->key = set2key();
+	this->key = set2key(this->bucket);
 }
 
 void mapNode::showNode() {
 	cout << "This set contains: " << this->key << endl;
-	cout << "This set size is: " << this->bucket.size() << endl;
-	cout << "This set score is: " << this->score << endl;
+	//cout << "This set size is: " << this->bucket.size() << endl;
+	//cout << "This set score is: " << this->score << endl;
 }
