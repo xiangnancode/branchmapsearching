@@ -6,10 +6,10 @@ using namespace std;
 
 int main() {
 	cout << "Hello World!" << endl;
-	buildMap my_map;
-	my_map.test();
+	buildMap x;
+	x.test();
 	//my_map.initialize("./input/short.csv");
-	my_map.initialize("./input/CNBCIQ_100.csv");
+	x.initialize("./input/short.csv");
 
 
 	return 1;
