@@ -21,6 +21,7 @@ private:
 	int amount;
 	void branchMapcheck();//also user to check 'branches'. ussage: input 'from' from the command line, print all 'to' and 'weight'
     void showMap();
+    void printResult(double, mapNode*);
 public:
     //buildMap();
     void initialize(string);//initialize the map from input file
