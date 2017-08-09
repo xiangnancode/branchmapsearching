@@ -11,7 +11,7 @@ using namespace std;
 
 class mapNode {
 private:
-	
+	string set2key();//convert the ordered set to string, each element was separated by ','
     
 public:
 	set<string> bucket;//indicates the state of a map node
@@ -21,7 +21,7 @@ public:
 
     mapNode();//construtor
     mapNode(set<string>, double);//constructor
-    string set2key(set<string>);//convert the ordered set to string, each element was separated by ','
+    
     void showNode();//print all information of this node to terminal
 };
 

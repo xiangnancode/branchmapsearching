@@ -10,6 +10,7 @@
 #include <set>
 #include <queue>
 #include <limits>
+#include <ctime>
 
 using namespace std;
 
@@ -22,6 +23,7 @@ private:
 	void branchMapcheck();//also user to check 'branches'. ussage: input 'from' from the command line, print all 'to' and 'weight'
     void showMap();
     void printResult(double, mapNode*);
+    string set2key(set<string> );
 public:
     //buildMap();
     void initialize(string);//initialize the map from input file

@@ -7,6 +7,19 @@ void buildMap::test() {
 	cout << x.score << endl;
 }
 
+string buildMap::set2key(set<string> aSet) {
+	string strset;//string tpye of the ordered set
+	for(auto i : aSet) {//for all elements in the set
+		if (strset.size() == 0) {//first element
+			strset = i;
+		} else {//rest of the elements
+			strset += "," + i;
+		}
+		
+	}
+	return strset;
+}
+
 set<string> buildMap::loadBranchMap(string filename) {
 	cout << "file name is: " << filename << endl;
 	cout << "loading..." << endl;
@@ -69,6 +82,10 @@ void buildMap::printResult(double maxscore, mapNode* maxstate) {
 }
 
 void buildMap::initialize(string filename) {
+	//for run time calculation
+	clock_t t;
+	t = clock();
+	//
 	set<string> bucket;
 	bucket = loadBranchMap(filename);//initial state
 	//branchMapcheck();
@@ -89,7 +106,7 @@ void buildMap::initialize(string filename) {
 			bucket = curr->bucket;//the bucket in this node
 			for (auto j : curr->bucket) {//for each element of this bucket
 				//cout << j << endl;
-				//cout << curr->set2key(bucket) << endl;
+				//cout << set2key(bucket) << endl;
 				if (branches.find(j) != branches.end()) {//if there are branches start with this element
 					bucket.erase(j);//remove one element
 					for (int k = 0; k < branches[j].size(); ++k) {//for each branch from this removed element
@@ -98,7 +115,7 @@ void buildMap::initialize(string filename) {
 							bucket.insert(branches[j][k].first);//put the destnation in
 							double newscore = curr->score + branches[j][k].second;
 							string newlog = j + "," + branches[j][k].first + "," + to_string(branches[j][k].second) + "," + to_string(newscore);
-							if (my_map.find(curr->set2key(bucket)) == my_map.end()) {//if the state is new
+							if (my_map.find(set2key(bucket)) == my_map.end()) {//if the state is new
 								mapNode* newnode = new mapNode(bucket, newscore);//create new node with new state and score after jump
 								my_map[newnode->key] = newnode;//put new node into my_map
 								newnode->logbook = curr->logbook;//create logbook
@@ -106,17 +123,17 @@ void buildMap::initialize(string filename) {
 								//cout << "Map size is: " << ++mapsize << endl;
 								BFSorder.push(newnode);//put the new node in the order
 							} else {//if the state already exists
-								if (my_map[curr->set2key(bucket)]->score < newscore) {
-									my_map[curr->set2key(bucket)]->score = newscore;//update the score
-									my_map[curr->set2key(bucket)]->logbook = curr->logbook;//replace logbook
-									my_map[curr->set2key(bucket)]->logbook.push_back(newlog);
+								if (my_map[set2key(bucket)]->score < newscore) {
+									my_map[set2key(bucket)]->score = newscore;//update the score
+									my_map[set2key(bucket)]->logbook = curr->logbook;//replace logbook
+									my_map[set2key(bucket)]->logbook.push_back(newlog);
 								}
 							}
 							if (newscore > maxscore) {
 								maxscore = newscore;
-								maxstate = my_map[curr->set2key(bucket)];
+								maxstate = my_map[set2key(bucket)];
 							}
-							//my_map[curr->set2key(bucket)]->showNode();
+							//my_map[set2key(bucket)]->showNode();
 							bucket.erase(branches[j][k].first);
 						}
 					}
@@ -130,4 +147,7 @@ void buildMap::initialize(string filename) {
 	}
 	showMap();
 	printResult(maxscore, maxstate);
+	//calculate run time
+	t = clock() - t;
+	cout << "run time is: " << ((float)t)/CLOCKS_PER_SEC << endl;
 }

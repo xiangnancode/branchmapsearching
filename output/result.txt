@@ -1,2 +1,2 @@
-maxscore is: 0.128288
-maxstate is: A,AAPL,PAY
+maxscore is: 0.288937
+maxstate is: A,AAPL,AGN,AMD,MU,PAY,XRX
