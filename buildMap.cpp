@@ -96,23 +96,39 @@ void buildMap::initialize(string filename) {
 	stack<string> DFSorder;
 	stack<string> path;
 	DFSorder.push(bucket);
+	double maxscore = 0;
 	while (DFSorder.size() > 0) {
+		//cout << my_map.size() << endl;
 		string curr = DFSorder.top();//current bucket
 		DFSorder.pop();
 		for (int i = 0; i < curr.size(); i += MAX_TICKER_LEN + 1) {//for each ticker in the current bucket
 			string ticker = curr.substr(i, MAX_TICKER_LEN);
-			cout << ticker << endl;
+			//cout << ticker << endl;
 			if (branches.find(ticker) != branches.end()) {//if the ticker can be substituted
-				for (int j = 0; j < branches[ticker].size(); ++j) {
-					cout << branches[ticker][j].first << ',' << branches[ticker][j].second << endl;
+				double score = my_map[curr];
+				for (int j = 0; j < branches[ticker].size(); ++j) {//for each substitution
+					//cout << branches[ticker][j].first << ',' << branches[ticker][j].second << endl;
+					curr.replace(i, MAX_TICKER_LEN, branches[ticker][j].first);//substitue
+					double newscore = score + branches[ticker][j].second;//newscore
+					if (my_map.find(curr) == my_map.end()) {//if it is new, store score and push in to DFSorder
+						my_map[curr] = newscore;
+						DFSorder.push(curr);
+					} else {
+						if (newscore > my_map[curr]) {//if newscore is better
+							my_map[curr] = newscore;
+						}
+					}
+					if (newscore > maxscore) {
+						maxscore = newscore;
+					}
+					curr.replace(i, MAX_TICKER_LEN, ticker);//substitue it back for next iteration
 				}
 			}
 		}
-		
-
-
 	}
-
+	cout << "maxscore is: " << maxscore << endl;
+	cout << "my_map size is: " << my_map.size() << endl;
+	cout << "my_map max size is: " << my_map.max_size() << endl;
 
 
 
