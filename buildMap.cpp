@@ -1,12 +1,5 @@
 #include "buildMap.h"
 
-void buildMap::test() {
-	cout << "print from buildMap test" << endl;
-	set<string> bucket;
-	mapNode x(bucket, 5.23);
-	cout << x.score << endl;
-}
-
 string buildMap::set2key(set<string> aSet) {
 	string strset;//string tpye of the ordered set
 	for(auto i : aSet) {//for all elements in the set
@@ -60,7 +53,7 @@ void buildMap::showMap() {
 	*/
 	cout << "Map size is: " << my_map.size() << endl;
 }
-
+/*
 void buildMap::printResult(double maxscore, mapNode* maxstate) {
 	ofstream file;
 	file.open("./output/result.txt");
@@ -80,7 +73,7 @@ void buildMap::printResult(double maxscore, mapNode* maxstate) {
 	}
 	file.close();
 }
-
+*/
 void buildMap::initialize(string filename) {
 	//for run time calculation
 	clock_t t;
@@ -89,6 +82,13 @@ void buildMap::initialize(string filename) {
 	set<string> bucket;
 	bucket = loadBranchMap(filename);//initial state
 	//branchMapcheck();
+	//DFS
+
+
+
+
+	//BFS
+	/*
 	mapNode* root = new mapNode(bucket, 0);//create new node for initial state
 	root->showNode();
 	cout << "amount = " << amount << endl;
@@ -147,6 +147,7 @@ void buildMap::initialize(string filename) {
 	}
 	showMap();
 	printResult(maxscore, maxstate);
+	*/
 	//calculate run time
 	t = clock() - t;
 	cout << "run time is: " << ((float)t)/CLOCKS_PER_SEC << endl;

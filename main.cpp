@@ -5,9 +5,8 @@ using namespace std;
 
 
 int main() {
-	cout << "Hello World!" << endl;
+	//cout << "Hello World!" << endl;
 	buildMap x;
-	x.test();
 	//x.initialize("./input/CNBCIQ_100.csv");
 	x.initialize("./input/justA.csv");
 
