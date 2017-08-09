@@ -1,6 +1,8 @@
 #include "buildMap.h"
 
-string buildMap::set2key(set<string> aSet) {
+#define MAX_TICKER_LEN 5
+
+string buildMap::set2str(set<string> aSet) {
 	string strset;//string tpye of the ordered set
 	for(auto i : aSet) {//for all elements in the set
 		if (strset.size() == 0) {//first element
@@ -13,7 +15,13 @@ string buildMap::set2key(set<string> aSet) {
 	return strset;
 }
 
-set<string> buildMap::loadBranchMap(string filename) {
+void buildMap::uniformSize(string &s) {
+	if (s.size() < MAX_TICKER_LEN) {
+		s.append(MAX_TICKER_LEN - s.size(), '*');
+	}
+}
+
+string buildMap::loadBranchMap(string filename) {
 	cout << "file name is: " << filename << endl;
 	cout << "loading..." << endl;
 	ifstream file;
@@ -25,6 +33,8 @@ set<string> buildMap::loadBranchMap(string filename) {
 	  getline(file, from,',');
 	  getline(file, to,',');
 	  getline(file, weight,'\n');
+	  uniformSize(from);
+	  uniformSize(to);
 	  branches[from].push_back(make_pair(to, stod(weight)));
 	  bucket.insert(from);
 	  all.insert(from);
@@ -32,7 +42,7 @@ set<string> buildMap::loadBranchMap(string filename) {
 	}
 	file.close();
 	amount = all.size();
-	return bucket;
+	return set2str(bucket);
 }
 
 void buildMap::branchMapcheck() {
@@ -79,10 +89,29 @@ void buildMap::initialize(string filename) {
 	clock_t t;
 	t = clock();
 	//
-	set<string> bucket;
-	bucket = loadBranchMap(filename);//initial state
+	string bucket = loadBranchMap(filename);//initial state
+	my_map[bucket] = 0;
 	//branchMapcheck();
 	//DFS
+	stack<string> DFSorder;
+	stack<string> path;
+	DFSorder.push(bucket);
+	while (DFSorder.size() > 0) {
+		string curr = DFSorder.top();//current bucket
+		DFSorder.pop();
+		for (int i = 0; i < curr.size(); i += MAX_TICKER_LEN + 1) {//for each ticker in the current bucket
+			string ticker = curr.substr(i, MAX_TICKER_LEN);
+			cout << ticker << endl;
+			if (branches.find(ticker) != branches.end()) {//if the ticker can be substituted
+				for (int j = 0; j < branches[ticker].size(); ++j) {
+					cout << branches[ticker][j].first << ',' << branches[ticker][j].second << endl;
+				}
+			}
+		}
+		
+
+
+	}
 
 
 
